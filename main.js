@@ -1,11 +1,19 @@
-/*---------- Query Selectors -----------*/
-var whatevs = document.querySelector('.whatevs');
+// /*---------- Query Selectors -----------*/
+var inputTitle = document.querySelector('#input-title')
+var inputTaskItem = document.querySelector('#input-item')
 
-/*---------- Global Variables ----------*/
-var example = ;
+var btnAddTask = document.querySelector('#form__task-icon')
+var btnCreateTaskList = document.querySelector('')
 
-/*---------- Event Listeners -----------*/
-*.addEventListener('click', )
+var inputTitle = document.querySelector('')
+var inputTitle = document.querySelector('')
+var inputTitle = document.querySelector('')
+var inputTitle = document.querySelector('')
+// /*---------- Global Variables ----------*/
 
-/*---------- Functions -----------------*/
-function
+// /*---------- Event Listeners -----------*/
+
+btnAddTask
+
+// /*---------- Functions -----------------*/
+

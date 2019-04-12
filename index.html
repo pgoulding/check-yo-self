@@ -4,43 +4,72 @@
   <meta charset="UTF-8">
   <title>Check Yo Self</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,800" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="normalize.css">
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+
 <header class="flex">
   <h1>CHECK<span> YO' </span>SELF</h1>
   <input id="input-search" class="header__input-searchbar" placeholder="search">
 </header>
+
 <aside >
   <form class="flex">
-    <label>Task Title</label>
+    <label for="input-title">Task Title</label>
     <input id="input-title" class="form__input" placeholder="A New Task Title">
-    <ul>
-      <li><button>dont ever play yourself</button></li>
-    </ul>
-    <label for="input-item">Task Item</label>
-    <input id="input-item" class="form__input" placeholder="Type in a new item">
-    <button id="btn-make-task" class="form__input">Make Task List</button>
-    <button id="btn-clear" class="form__input">Clear All</button>
-  </form>
-  <button id="btn-filter-urgency" class="btn__filter-inactive">Filter By Urgency</button>
-</aside>
-<main>
-  <article class="card__task-container">
-    <section class="card__task-top">
-      <h3>Task Title</h3>
-    </section>
-    <div class="card__task-list">
-      <label class="task-checkbox">
-        <input type="checkbox">
+    <section class="form__task-container">
+      <label class="form__checkbox-task">
+        <img src="images/defRealCheckbox" class="form__checkbox-ico">
         Dont ever play yourself
       </label>
-    </div>
-    <section class="card__task-modify">
-      <img src="images/definitelyrealurgent.svg" class="task-modifiers" alt="mark task as urgent">
-      <img src="images/definitelyrealdelete.svg" class="task-modifiers" alt="delete task">
     </section>
+    <label for="input-item" class="block">Task Item</label>
+    <div class="search-container flex">
+      <input id="input-item" class="form__input" placeholder="Type in a new item"><button id="add-ask-icon" class="form__task-icon">+</button>
+    </div>
+    <button id="btn-make-task" type="submit" class="form__input form__input-create">Make Task List</button>
+    <button id="btn-clear" class="form__input form__input-clear">Clear All</button>
+    <button id="btn-filter-urgent" class="form__input form__input-filter">Filter by Urgency</button>
+  </form>
+
+</aside>
+
+<main class="flex">
+  <article>
+    <div class="card__task-container flex">
+      <section class="card__task-top">
+        <h3>Task Title</h3>
+      </section>
+      <div class="card__task-list">
+        <label class="task-checkbox">
+          <input type="checkbox">
+          Dont ever play yourself
+        </label>
+      </div>
+      <section class="card__task-modify">
+        <img src="images/definitelyrealurgent.svg" class="task-modifiers" alt="mark task as urgent">
+        <img src="images/definitelyrealdelete.svg" class="task-modifiers" alt="delete task">
+      </section>
+    </div>
+  </article>
+  <article>
+    <div class="card__task-container flex">
+      <section class="card__task-top">
+        <h3>Task Title</h3>
+      </section>
+      <div class="card__task-list">
+        <label class="task-checkbox">
+          <input type="checkbox">
+          Dont ever play yourself
+        </label>
+      </div>
+      <section class="card__task-modify">
+        <img src="images/definitelyrealurgent.svg" class="task-modifiers" alt="mark task as urgent">
+        <img src="images/definitelyrealdelete.svg" class="task-modifiers" alt="delete task">
+      </section>
+    </div>
   </article>
 </main>
 </body>

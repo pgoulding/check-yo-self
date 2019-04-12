@@ -1,83 +1,144 @@
 /*---------- Body ------------------*/
-*{
+* {
   /* border-top: 1px solid red; */
   box-sizing: border-box;
 }
 
-body{
+body {
   border: 1px dashed;
   display: grid;
+  height: 100vh;
   grid-template-columns: 300px auto;
-  grid-template-rows: 100px 800px;
+  grid-template-rows: 50px 1fr;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.flex{
-  display: flex;
-}
-
-.block{
+label{
   display: block;
 }
 
-.hidden{
+.flex {
+  display: flex;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
   display: hidden;
 }
+
 /*---------- Header ----------------*/
 
-header{
+header {
   background-color: #1f1f3d;
   grid-column: 1/ span 2;
   grid-row: 1; 
   align-items: center;
   justify-content: space-between;
-  padding:20px;
+  padding:0 10px;
 }
 
-h1{
+h1 {
   color: #ffffff;
 }
 
-span{
+span {
   color: yellow;
 }
 
-.header__input-searchbar{
-  height: 50%;
+.header__input-searchbar {
+  height: 70%;
 }
 
 /*---------- Aside -----------------*/
 
-aside{
+aside {
   min-width: 300px;
   background-color: #587a8b;
   border-right: #314955;
   grid-column: 1;
 }
 
-form{
+form {
   align-content: flex-start;
+  color: #ffffff;
   flex-direction: column;
   padding: 10px;
 }
-.form__input{
+
+button {
+  background-color: #1f1f3d;
+  color: #ffffff;
+  outline: none;
+  border: 0;
+}
+
+.form__input {
   border-radius: 3px;
-  margin: 10px;
+  margin: 10px 0;
+  height: 40px;
+}
+
+.form__checkbox-task {
+  margin: 20px 0;
+}
+
+.form__task-container{
+  padding: 20px;
+}
+
+/* .form__task-add{
+  display: block;
+} */
+
+.form__task-icon{
+  font-size: 2em;
+  margin-top: 10px;
   height: 40px;
 }
 /*---------- Main ------------------*/
 
-main{
+main {
   background-color: #f4f7f8;
+  flex-wrap: wrap;
 }
 
-/*---------- Aritcle ---------------*/
+/*---------- Article ---------------*/
 
-article{
+.article {
+  display: inline;
+}
+
+h3 {
+  margin-top: 0;
+  border-bottom: 1px solid #C7D3D8;
+}
+
+.card__task-container {
+  width: 300px;
+  min-height: 200px;
+  background-color: #fbfdff;
+  border: 1px solid #C7D3D8;
+  margin:10px;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card__task-top {
 
 }
 
+.card__task-list {
 
+}
 
+.card__task-modify {
+ border-top: 1px solid #C7D3D8;
+ vertical-align: bottom;
+}
 /*---------- Media Queries ---------*/
 
 /*---- Large Tablet/Small Comp -----*/
