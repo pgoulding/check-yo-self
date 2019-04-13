@@ -19,8 +19,8 @@
   <form class="flex">
     <label for="input-title">Task Title</label>
     <input id="input-title" class="form__input" placeholder="A New Task Title">
-    <section class="form__task-container">
-      <ul>
+    <section>
+      <ul class="form__task-container">
       </ul>
     </section>
     <label for="input-item" class="block">Task Item</label>
@@ -44,24 +44,6 @@
       <div class="card__task-list">
         <label class="task-checkbox">
           <input type="checkbox">
-          Dont ever play yourself
-        </label>
-      </div>
-      <section class="card__task-modify flex">
-        <img src="images/urgent.svg" class="task-modifiers card__task-ico" alt="mark task as urgent">
-        <img src="images/delete.svg" class="task-modifiers card__task-ico" alt="delete task">
-      </section>
-    </div>
-  </article>
-  <article>
-    <div class="card__task-container flex">
-      <section class="card__task-top">
-        <h3>Task Title</h3>
-      </section>
-      <div class="card__task-list">
-
-        <label class="task-checkbox">
-          <input type="checkbox">
           <img src="images/checkbox.svg" class="card__task-ico">
           Dont ever play yourself
         </label>
@@ -71,6 +53,25 @@
         <img src="images/delete.svg" class="task-modifiers card__task-ico" alt="delete task">
       </section>
     </div>
+    <template>
+      <div class="card card__task-container flex">
+        <section class="card__task-top">
+          <h3 class="card-title">Task Title</h3>
+        </section>
+        <div class="card__task-list">
+          <label class="task-checkbox">
+            <input type="checkbox">
+            <img src="images/checkbox.svg" class="card__task-ico">
+            Dont ever play yourself
+          </label>
+        </div>
+        <section class="card__task-modify flex">
+          <img src="images/urgent.svg" class="task-modifiers card__task-ico card__task-urgent" alt="mark task as urgent">
+          <img src="images/delete.svg" class="task-modifiers card__task-ico card__task-delete" alt="delete task">
+        </section>
+      </div>
+    </template>
+
   </article>
 </main>
 </body>

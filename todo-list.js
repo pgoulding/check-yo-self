@@ -1,9 +1,9 @@
 class ToDoList{
-  constructor(id, title, urgent){
+  constructor(id, title, tasks){
     this.id = id;
     this.title = title;
-    this.tasks = [];
-    this.urgent = urgent || false;
+    this.tasks = tasks || [];
+    this.urgent = false;
   }
   saveToStorage(lists) {
     localStorage.setItem('idea-card', JSON.stringify(lists));
@@ -20,10 +20,15 @@ class ToDoList{
     this.urgent = !this.urgent;
     this.saveToStorage(lists);
   }
-  updateToDo(){
-
-  }
   updateTask(){
 
+  }
+}
+
+class Tasks{
+  constructor(content){
+    this.id = Date.now();
+    this.done = false;
+    this.content = content;
   }
 }
