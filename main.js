@@ -24,7 +24,7 @@ var lists = JSON.parse(localStorage.getItem('list-card')) || [];
 // /*---------- Event Listeners -----------*/
 
 
-
+outputTaskContainer.addEventListener('click', removeSingleItem)
 btnAddTask.addEventListener('click', addTaskToList)
 btnCreateTaskList.addEventListener('click', createNewList);
 
@@ -39,23 +39,22 @@ function startCheckYoSelf() {
 
 function addTaskToList(e) {
   e.preventDefault()
-  if(inputTaskItem.value && inputTitle.value){
+  if(inputTaskItem.value){
     outputTaskContainer.innerHTML += `<li><img src="images/delete.svg" class="card__task-ico img__task-delete"> ${inputTaskItem.value}</li>`
-    taskItems.push(inputTaskItem.value)
+    var newTask = new Tasks(Date.now(), inputTaskItem.value)
+    taskItems.push(newTask)
+    console.log(taskItems)
     inputTaskItem.value = '';
-    addTaskListEvents()
   }
 }
 
-function addTaskListEvents() {
-  for (var i = 0; i < btnTaskListItemDelete.length; ++i) {
-    btnTaskListItemDelete[i].addEventListener('click', removeSingleItem);
-  }
-}
+// function addTaskListEvents() {
+//   for (var i = 0; i < btnTaskListItemDelete.length; ++i) {
+//     btnTaskListItemDelete[i].addEventListener('click', removeSingleItem);
+//   }
+// }
 
 function removeSingleItem(e){
-  //not firing
-  console.log(e)
   e.target.closest('li').remove()
 }
 
@@ -72,7 +71,7 @@ function removeCard(target) {
 
 function createNewList(e) {
   e.preventDefault()
-  var newToDoList = new ToDoList(Date.now(), inputTitle.value, taskItems.concat());
+  var newToDoList = new ToDoList(Date.now(), inputTitle.value, taskItems.values());
   addCardToDOM(newToDoList);
   lists.push(newToDoList);
   newToDoList.saveToStorage(lists);

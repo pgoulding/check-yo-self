@@ -26,8 +26,8 @@ class ToDoList{
 }
 
 class Tasks{
-  constructor(content){
-    this.id = Date.now();
+  constructor(id, content){
+    this.id = id;
     this.done = false;
     this.content = content;
   }

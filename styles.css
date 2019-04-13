@@ -79,12 +79,16 @@ button {
   border: 0;
 }
 
+ul{
+  margin:0;
+}
+
 li{
   list-style-type: none;
 }
 
 li:hover{
-  background-color: #1f1f3d;
+  font-weight: 700;
 }
 .form__input {
   border-radius: 3px;
