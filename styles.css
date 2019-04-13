@@ -83,6 +83,9 @@ li{
   list-style-type: none;
 }
 
+li:hover{
+  background-color: #1f1f3d;
+}
 .form__input {
   border-radius: 3px;
   margin: 10px 0;
@@ -111,6 +114,10 @@ li{
   height: 40px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+
+.error{
+  border: 3px solid red;
 }
 /*---------- Main ------------------*/
 
