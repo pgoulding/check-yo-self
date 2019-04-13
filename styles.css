@@ -5,7 +5,6 @@
 }
 
 body {
-  border: 1px dashed;
   display: grid;
   height: 100vh;
   grid-template-columns: 300px auto;
@@ -23,12 +22,17 @@ label{
 
 .visible {
   display: block;
-}
+}  
 
 .hidden {
   display: hidden;
 }
 
+.card__task-ico{
+  width: 20px;
+  display: inline;
+  align-self: center;
+}
 /*---------- Header ----------------*/
 
 header {
@@ -75,28 +79,38 @@ button {
   border: 0;
 }
 
+li{
+  list-style-type: none;
+}
+
 .form__input {
   border-radius: 3px;
   margin: 10px 0;
   height: 40px;
+  border: 2px solid #1f1f3d;
+  padding-left: 5px;
+}
+
+.form__input-task{
+  width: 90%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .form__checkbox-task {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .form__task-container{
   padding: 20px;
 }
 
-/* .form__task-add{
-  display: block;
-} */
-
 .form__task-icon{
   font-size: 2em;
   margin-top: 10px;
   height: 40px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 /*---------- Main ------------------*/
 
@@ -137,7 +151,14 @@ h3 {
 
 .card__task-modify {
  border-top: 1px solid #C7D3D8;
- vertical-align: bottom;
+ padding-top: 5px;
+ vertical-align: baseline;
+ justify-content: space-between;
+ height:30px;
+}
+
+.task-checkbox{
+  vertical-align: middle;
 }
 /*---------- Media Queries ---------*/
 
