@@ -58,6 +58,18 @@ function addTaskToList(e) {
   }
 }
 
+function taskToCard(newCard) {
+  var taskListIteration = '';
+  for (var i = 0; i < newCard.taskList.length; i++) {
+    taskListIteration += `
+      <li>
+        <input type="checkbox" data-id=${newCard.taskList[i].id} id="index ${i}"/>
+        <p>${newCard.taskList[i].content}</p>
+      </li>
+      `
+  } return taskListIteration;
+}
+
 // function addTaskListEvents() {
 //   for (var i = 0; i < btnTaskListItemDelete.length; ++i) {
 //     btnTaskListItemDelete[i].addEventListener('click', removeSingleItem);
@@ -106,7 +118,7 @@ function addCardToDOM(list) {
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
   cardClone.querySelector('.card-title').innerText = list.title;
-  cardClone.querySelector('.card__task-list').innerHTML = `<li>${lists.tasks}</li>`
+  cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(newToDoList)}</li>`
   urgentify(cardClone, list);
 }
 
