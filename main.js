@@ -24,59 +24,75 @@ var lists = JSON.parse(localStorage.getItem('list-card')) || [];
 // /*---------- Event Listeners -----------*/
 
 
-
+outputTaskContainer.addEventListener('click', removeSingleItem)
 btnAddTask.addEventListener('click', addTaskToList)
 btnCreateTaskList.addEventListener('click', createNewList);
-
+btnClear.addEventListener('click', clearTaskListBtn)
 // btnCreateTaskList.addEventListener('click', makeTaskList)
 // btnClear.addEventListener('click', clearTaskList)
 
 // /*---------- Functions -----------------*/
 
 function startCheckYoSelf() {
+  fetchLists()
+}
 
+function reinstateLists(i) {
+  return new ToDoList(lists[i].id, lists[i].title, lists[i].tasks);
+}
+
+function fetchLists() {
+  lists.forEach(element => {
+    addCardToDOM(element)
+  });
 }
 
 function addTaskToList(e) {
   e.preventDefault()
-  if(inputTaskItem.value && inputTitle.value){
+  if(inputTaskItem.value){
     outputTaskContainer.innerHTML += `<li><img src="images/delete.svg" class="card__task-ico img__task-delete"> ${inputTaskItem.value}</li>`
-    taskItems.push(inputTaskItem.value)
+    var newTask = new Tasks(Date.now(), inputTaskItem.value)
+    taskItems.push(newTask)
+    console.log(taskItems)
     inputTaskItem.value = '';
-    addTaskListEvents()
   }
 }
 
-function addTaskListEvents() {
-  for (var i = 0; i < btnTaskListItemDelete.length; ++i) {
-    btnTaskListItemDelete[i].addEventListener('click', removeSingleItem);
-  }
-}
+// function addTaskListEvents() {
+//   for (var i = 0; i < btnTaskListItemDelete.length; ++i) {
+//     btnTaskListItemDelete[i].addEventListener('click', removeSingleItem);
+//   }
+// }
 
 function removeSingleItem(e){
-  //not firing
-  console.log(e)
   e.target.closest('li').remove()
+  console.log(e.target)
+}
+
+function getListIndex(target) {
+  var parent = target.closest('article');
+  var parentID = parseInt(parent.dataset.id);
+  var index = lists.findIndex(element => element.id === parentID);
+  return index;
 }
 
 function removeCard(target) {
-  const parsedId = parseInt(target.parentNode.parentNode.getAttribute('data-id'));
-  const targetIdea = lists.find(task => {
-    task.id === parsedId;
-  });
-  const ideaIndex = lists.indexOf(targetIdea);
-  target.parentNode.parentNode.parentNode.removeChild(target.parentNode.parentNode);
-  targetIdea.deleteFromStorage(ideaIndex);
-  hideEmptyMessage();
+  var index = getListIndex(target)
+  var task = reinstateLists(index)
+  target.closest('article').remove();
+  task.deleteFromStorage(index);
 }
 
 function createNewList(e) {
   e.preventDefault()
-  var newToDoList = new ToDoList(Date.now(), inputTitle.value, taskItems.concat());
-  addCardToDOM(newToDoList);
-  lists.push(newToDoList);
-  newToDoList.saveToStorage(lists);
-  // clearCardForms();
+  if (inputTitle.value && taskItems.length != 0){
+    var newToDoList = new ToDoList(Date.now(), inputTitle.value, taskItems);
+    addCardToDOM(newToDoList);
+    console.log(taskItems)
+    lists.push(newToDoList);
+    newToDoList.saveToStorage(lists);
+    clearTaskList();
+  }
 }
 
 function addCardToDOM(list) {
@@ -89,25 +105,44 @@ function addCardToDOM(list) {
 
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
-  cardClone.querySelector('.card-title').innerText = list.title || 'list Title';
-  cardClone.querySelector('.card__task-list').innerText = list.tasks || 'Lorem Ipsum';
-  // cardClone.querySelector('.card-bottom-quality').innerText = qualityName;
-  // starCheck(list, cardClone);
+  cardClone.querySelector('.card-title').innerText = list.title;
+  cardClone.querySelector('.card__task-list').innerHTML = `<li>${lists.tasks}</li>`
+  urgentify(cardClone, list);
 }
 
 function cardActions(e) {
   e.preventDefault();
+  console.log('card actions')
   let target = e.target;
   if (target.matches('.card__task-delete')) {
     removeCard(target);
+    console.log('target remove')
   }
   if (target.matches('.card__task-urgent')) {
-    urgentify(target);
+    urgentify();
   }
 }
 
-function clearTaskList() {
+function urgentify(cardClone){
+  console.log('urgentify')
   
+  if(lists.urgent){
+    cardClone.querySelector('.card__task-urgent').setAttribute('src', 'images/urgent-active.svg')
+
+  } else {
+    cardClone.querySelector('.card__task-urgent').setAttribute('src', 'images/urgent.svg')
+  }
+}
+
+function clearTaskListBtn(e) {
+  e.preventDefault()
+  clearTaskList()  
+}
+
+function clearTaskList() {
+  inputTitle.value = '';
+  outputTaskContainer.innerHTML =''
+  taskItems.splice(0, taskItems.length)
 }
 
 window.onload = startCheckYoSelf()

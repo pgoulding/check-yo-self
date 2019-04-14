@@ -6,14 +6,14 @@ class ToDoList{
     this.urgent = false;
   }
   saveToStorage(lists) {
-    localStorage.setItem('idea-card', JSON.stringify(lists));
+    localStorage.setItem('list-card', JSON.stringify(lists));
   }
   deleteFromStorage(index) {
     lists.splice(index, 1);
     this.saveToStorage(lists);
   }
-  updateTitle(idea, editedTitle) {
-    idea.title = editedTitle;
+  updateTitle(list, editedTitle) {
+    list.title = editedTitle;
     this.saveToStorage(lists);
   }
   urgent() {
@@ -26,8 +26,8 @@ class ToDoList{
 }
 
 class Tasks{
-  constructor(content){
-    this.id = Date.now();
+  constructor(id, content){
+    this.id = id;
     this.done = false;
     this.content = content;
   }

@@ -79,12 +79,16 @@ button {
   border: 0;
 }
 
+ul{
+  margin:0;
+}
+
 li{
   list-style-type: none;
 }
 
 li:hover{
-  background-color: #1f1f3d;
+  font-weight: 700;
 }
 .form__input {
   border-radius: 3px;
@@ -123,13 +127,16 @@ li:hover{
 
 main {
   background-color: #f4f7f8;
-  flex-wrap: wrap;
+  column-width: 13em;
 }
 
 /*---------- Article ---------------*/
 
-.article {
-  display: inline;
+article {
+  display: inline-block;
+  margin:  0.25rem;
+  padding:  1rem;
+  width:  100%; 
 }
 
 h3 {
@@ -138,8 +145,6 @@ h3 {
 }
 
 .card__task-container {
-  width: 300px;
-  min-height: 200px;
   background-color: #fbfdff;
   border: 1px solid #C7D3D8;
   margin:10px;

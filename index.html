@@ -35,11 +35,11 @@
   </form>
 </aside>
 
-<main class="flex">
-  <article>
-    <div class="card__task-container flex">
+<main>
+  <template>
+    <article class="card card__task-container">
       <section class="card__task-top">
-        <h3>Task Title</h3>
+        <h3 class="card-title">Task Title</h3>
       </section>
       <div class="card__task-list">
         <label class="task-checkbox">
@@ -49,30 +49,11 @@
         </label>
       </div>
       <section class="card__task-modify flex">
-        <img src="images/urgent.svg" class="task-modifiers card__task-ico" alt="mark task as urgent">
-        <img src="images/delete.svg" class="task-modifiers card__task-ico" alt="delete task">
+        <img src="images/urgent.svg" class="task-modifiers card__task-ico card__task-urgent" alt="mark task as urgent">
+        <img src="images/delete.svg" class="task-modifiers card__task-ico card__task-delete" alt="delete task">
       </section>
-    </div>
-    <template>
-      <div class="card card__task-container flex">
-        <section class="card__task-top">
-          <h3 class="card-title">Task Title</h3>
-        </section>
-        <div class="card__task-list">
-          <label class="task-checkbox">
-            <input type="checkbox">
-            <img src="images/checkbox.svg" class="card__task-ico">
-            Dont ever play yourself
-          </label>
-        </div>
-        <section class="card__task-modify flex">
-          <img src="images/urgent.svg" class="task-modifiers card__task-ico card__task-urgent" alt="mark task as urgent">
-          <img src="images/delete.svg" class="task-modifiers card__task-ico card__task-delete" alt="delete task">
-        </section>
-      </div>
-    </template>
-
-  </article>
+    </article>
+  </template>
 </main>
 </body>
 <script type="text/javascript" src="todo-list.js"></script>
