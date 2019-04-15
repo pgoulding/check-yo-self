@@ -9,12 +9,10 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-
 <header class="flex">
   <h1>CHECK<span> YO' </span>SELF</h1>
-  <input id="input-search" class="header__input-searchbar form__input" placeholder="search">
+    <img src="images/search.svg" class="icon__"><input id="input-search" class="header__input-searchbar form__input" placeholder="search">
 </header>
-
 <aside >
   <form class="flex">
     <label for="input-title">Task Title</label>
@@ -34,9 +32,8 @@
     <button id="btn-filter-urgent" class="form__input form__input-filter">Filter by Urgency</button>
   </form>
 </aside>
-
-<main>
-  <h3 class="">No Lists yet, why don't you add one!</h3>
+<main class="masonry-layout">
+  <h3 class="no-ideas">No Lists yet, why don't you add one!</h3>
   <template>
     <article class="card card__task-container">
       <section class="card__task-top">
@@ -50,8 +47,13 @@
         </label>
       </div>
       <section class="card__task-modify flex">
-        <img src="images/urgent.svg" class="task-modifiers card__task-ico card__task-urgent" alt="mark task as urgent">
-        <img src="images/delete.svg" class="task-modifiers card__task-ico card__task-delete" alt="delete task">
+        <div class="bottom__task-icon flex">
+            <input type="image" src="images/urgent.svg" class="task-modifiers card__task-ico card__task-urgent" alt="Mark as urgent">
+            URGENT</input>
+        </div>
+        <div class="bottom__task-icon flex">
+            <input type="image" src="images/delete.svg" class="task-modifiers card__task-ico card__task-delete" alt="delete task"> DELETE</input>
+        </div>
       </section>
     </article>
   </template>
