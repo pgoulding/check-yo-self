@@ -4,16 +4,17 @@ var inputTaskItem = document.querySelector('#input-item');
 
 var outputArray = document.getElementsByClassName('sidebar__task-list')
 
+var btnTaskListItemDelete = document.getElementsByClassName('img__task-delete')
 var btnAddTask = document.querySelector('#add-task-icon');
 var btnCreateTaskList = document.querySelector('#btn-make-task');
 var btnClear = document.querySelector('#btn-clear');
-var btnTaskListItemDelete = document.getElementsByClassName('img__task-delete')
 
 var cardTemplate = document.querySelector('template'); 
 var outputTaskContainer = document.querySelector('.form__task-container');
 var cardsArea = document.querySelector('main')
 /*---------- Global Variables ----------*/
 var lists = JSON.parse(localStorage.getItem('list-card')) || [];
+
 /*---------- Event Listeners -----------*/
 outputTaskContainer.addEventListener('click', removeSingleItem)
 btnAddTask.addEventListener('click', addTaskToList)
@@ -26,7 +27,7 @@ function startCheckYoSelf() {
 }
 
 function reinstateLists(i) {
-  return new ToDoList(lists[i].id, lists[i].title, lists[i].tasks);
+  return new ToDoList(lists[i].id, lists[i].title, lists[i].tasks, lists[i].urgent);
 }
 
 function fetchLists() {
@@ -45,7 +46,7 @@ function addTaskToList(e) {
 
 function addTaskToArray(e){
   e.preventDefault()
-  taskArray = []
+  var taskArray = []
  for (let i = 0; i < outputArray.length; i++) {
    var newTask = {
      id: `${i}${Date.now()}`,
@@ -88,7 +89,7 @@ function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card-title').innerText = list.title;
   cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
   cardClone.querySelector('.card__task-delete').innerHTML = ``
-  urgentify(cardClone, list);
+  cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`)
 }
 
 function cardActions(e) {
@@ -130,13 +131,21 @@ function removeSingleItem(e) {
   console.log(e.target)
 }
 
-function urgentify(cardClone, list){
-  console.log('urgentify')
-  if(list.urgent===true){
-    cardClone.querySelector('.card__task-urgent').setAttribute('src', 'images/urgent-active.svg')
-  } else {
-    cardClone.querySelector('.card__task-urgent').setAttribute('src', 'images/urgent.svg')
+function urgentify(target) {
+  var listIndex = getListIndex(target)
+  var toDoCard = reinstateLists(listIndex)
+  toDoCard.updateUrgent(listIndex)
+  if (toDoCard.urgent === true) {
+    target.setAttribute('src', 'images/urgent-active.svg');
+    target.closest('article').classList.add('urgent-background')
+  } else if (toDoCard.urgent === false) {
+    target.setAttribute('src', 'images/urgent.svg');
+    target.closest('article').classList.remove('urgent-background')
   }
+}
+
+function markItems(target){
+
 }
 
 function clearTaskListBtn(e) {

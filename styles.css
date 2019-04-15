@@ -93,6 +93,7 @@ ul{
 
 li{
   list-style-type: none;
+  padding: 5px 0;
 }
 
 li:hover{
@@ -158,7 +159,7 @@ article {
 }
 
 h3 {
-  margin-top: 0;
+  margin: 0;
   border-bottom: 1px solid #C7D3D8;
 }
 
@@ -197,6 +198,9 @@ h3 {
 .card__task-urgent,
 .card__task-delete{
   margin: auto;
+}
+.urgent-background{
+  background-color: yellow;
 }
 /*---------- Media Queries ---------*/
 
