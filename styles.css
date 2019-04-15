@@ -128,6 +128,7 @@ li:hover{
 main {
   background-color: #f4f7f8;
   column-width: 13em;
+  padding-right: 20px;
 }
 
 /*---------- Article ---------------*/

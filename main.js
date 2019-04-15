@@ -12,29 +12,23 @@ var outputTaskContainer = document.querySelector('.form__task-container');
 var cardsArea = document.querySelector('main')
 var btnTaskListItemDelete = document.getElementsByClassName('img__task-delete')
 
-
-// var inputTitle = document.querySelector('')
-// var inputTitle = document.querySelector('')
-// var inputTitle = document.querySelector('')
-// /*---------- Global Variables ----------*/
-
+/*---------- Global Variables ----------*/
 var taskItems = []
 var lists = JSON.parse(localStorage.getItem('list-card')) || [];
 
-// /*---------- Event Listeners -----------*/
+/*---------- Event Listeners -----------*/
 
 
 outputTaskContainer.addEventListener('click', removeSingleItem)
 btnAddTask.addEventListener('click', addTaskToList)
 btnCreateTaskList.addEventListener('click', createNewList);
 btnClear.addEventListener('click', clearTaskListBtn)
-// btnCreateTaskList.addEventListener('click', makeTaskList)
-// btnClear.addEventListener('click', clearTaskList)
 
-// /*---------- Functions -----------------*/
+/*---------- Functions -----------------*/
 
 function startCheckYoSelf() {
   fetchLists()
+  toggleNoLists()
 }
 
 function reinstateLists(i) {
@@ -60,21 +54,11 @@ function addTaskToList(e) {
 
 function taskToCard(newCard) {
   var taskListIteration = '';
-  for (var i = 0; i < newCard.taskList.length; i++) {
+  for (var i = 0; i < newCard.tasks.length; i++) {
     taskListIteration += `
-      <li>
-        <input type="checkbox" data-id=${newCard.taskList[i].id} id="index ${i}"/>
-        <p>${newCard.taskList[i].content}</p>
-      </li>
-      `
+      <li data-id=${newCard.tasks[i].id} class="index-${i}">${newCard.tasks[i].content}</li>`
   } return taskListIteration;
 }
-
-// function addTaskListEvents() {
-//   for (var i = 0; i < btnTaskListItemDelete.length; ++i) {
-//     btnTaskListItemDelete[i].addEventListener('click', removeSingleItem);
-//   }
-// }
 
 function removeSingleItem(e){
   e.target.closest('li').remove()
@@ -99,9 +83,10 @@ function createNewList(e) {
   e.preventDefault()
   if (inputTitle.value && taskItems.length != 0){
     var newToDoList = new ToDoList(Date.now(), inputTitle.value, taskItems);
-    addCardToDOM(newToDoList);
-    console.log(taskItems)
+    console.log(taskItems);
     lists.push(newToDoList);
+    addCardToDOM(newToDoList);
+    console.log(lists)
     newToDoList.saveToStorage(lists);
     clearTaskList();
   }
@@ -118,7 +103,7 @@ function addCardToDOM(list) {
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
   cardClone.querySelector('.card-title').innerText = list.title;
-  cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(newToDoList)}</li>`
+  cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`
   urgentify(cardClone, list);
 }
 
@@ -133,6 +118,7 @@ function cardActions(e) {
   if (target.matches('.card__task-urgent')) {
     urgentify();
   }
+  toggleNoLists()
 }
 
 function urgentify(cardClone){
@@ -155,6 +141,12 @@ function clearTaskList() {
   inputTitle.value = '';
   outputTaskContainer.innerHTML =''
   taskItems.splice(0, taskItems.length)
+}
+
+function toggleNoLists() {
+  if(lists.length === 0){
+    
+  }
 }
 
 window.onload = startCheckYoSelf()
