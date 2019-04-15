@@ -11,30 +11,24 @@ var cardTemplate = document.querySelector('template');
 var outputTaskContainer = document.querySelector('.form__task-container');
 var cardsArea = document.querySelector('main')
 var btnTaskListItemDelete = document.getElementsByClassName('img__task-delete')
+var outputArray = document.getElementsByClassName('sidebar__task-list')
 
-
-// var inputTitle = document.querySelector('')
-// var inputTitle = document.querySelector('')
-// var inputTitle = document.querySelector('')
-// /*---------- Global Variables ----------*/
-
-var taskItems = []
+/*---------- Global Variables ----------*/
 var lists = JSON.parse(localStorage.getItem('list-card')) || [];
 
-// /*---------- Event Listeners -----------*/
+/*---------- Event Listeners -----------*/
 
 
 outputTaskContainer.addEventListener('click', removeSingleItem)
 btnAddTask.addEventListener('click', addTaskToList)
-btnCreateTaskList.addEventListener('click', createNewList);
+btnCreateTaskList.addEventListener('click', addTaskToArray);
 btnClear.addEventListener('click', clearTaskListBtn)
-// btnCreateTaskList.addEventListener('click', makeTaskList)
-// btnClear.addEventListener('click', clearTaskList)
 
-// /*---------- Functions -----------------*/
+/*---------- Functions -----------------*/
 
 function startCheckYoSelf() {
   fetchLists()
+  toggleNoLists()
 }
 
 function reinstateLists(i) {
@@ -50,23 +44,40 @@ function fetchLists() {
 function addTaskToList(e) {
   e.preventDefault()
   if(inputTaskItem.value){
-    outputTaskContainer.innerHTML += `<li><img src="images/delete.svg" class="card__task-ico img__task-delete"> ${inputTaskItem.value}</li>`
-    var newTask = new Tasks(Date.now(), inputTaskItem.value)
-    taskItems.push(newTask)
-    console.log(taskItems)
-    inputTaskItem.value = '';
+    outputTaskContainer.innerHTML += `<li class="sidebar__task-list"><img src="images/delete.svg" class="card__task-ico img__task-delete"> ${inputTaskItem.value}</li>`
   }
 }
 
-// function addTaskListEvents() {
-//   for (var i = 0; i < btnTaskListItemDelete.length; ++i) {
-//     btnTaskListItemDelete[i].addEventListener('click', removeSingleItem);
-//   }
-// }
+function addTaskToArray(e){
+  e.preventDefault()
+  taskArray = []
+ for (let i = 0; i < outputArray.length; i++) {
+   var newTask = {
+     id: `${i}${Date.now()}`,
+     done: false,
+     content: outputArray[i].innerText
+   }
+   taskArray.push(newTask)
+ }
+  inputTaskItem.value = '';
+  createNewList(taskArray)
+}
+
+function taskToCard(newCard) {
+  var taskListIteration = '';
+  for (var i = 0; i < newCard.tasks.length; i++) {
+    taskListIteration += `<li data-id=${newCard.tasks[i].id} class="index-${i}"><img src="images/checkbox.svg" class="card__task-ico">${newCard.tasks[i].content}</li>`
+  } return taskListIteration;
+}
 
 function removeSingleItem(e){
+  e.target
   e.target.closest('li').remove()
   console.log(e.target)
+}
+
+function getItemIndex(target){
+
 }
 
 function getListIndex(target) {
@@ -83,15 +94,14 @@ function removeCard(target) {
   task.deleteFromStorage(index);
 }
 
-function createNewList(e) {
-  e.preventDefault()
+function createNewList(taskItems) {
   if (inputTitle.value && taskItems.length != 0){
     var newToDoList = new ToDoList(Date.now(), inputTitle.value, taskItems);
-    addCardToDOM(newToDoList);
-    console.log(taskItems)
     lists.push(newToDoList);
+    addCardToDOM(newToDoList);
     newToDoList.saveToStorage(lists);
     clearTaskList();
+    toggleNoLists();
   }
 }
 
@@ -106,29 +116,27 @@ function addCardToDOM(list) {
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
   cardClone.querySelector('.card-title').innerText = list.title;
-  cardClone.querySelector('.card__task-list').innerHTML = `<li>${lists.tasks}</li>`
+  cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
+  cardClone.querySelector('.card__task-delete').innerHTML = ``
   urgentify(cardClone, list);
 }
 
 function cardActions(e) {
   e.preventDefault();
-  console.log('card actions')
   let target = e.target;
   if (target.matches('.card__task-delete')) {
     removeCard(target);
-    console.log('target remove')
   }
   if (target.matches('.card__task-urgent')) {
-    urgentify();
+    urgentify(target);
   }
+  toggleNoLists()
 }
 
-function urgentify(cardClone){
+function urgentify(cardClone, list){
   console.log('urgentify')
-  
-  if(lists.urgent){
+  if(list.urgent===true){
     cardClone.querySelector('.card__task-urgent').setAttribute('src', 'images/urgent-active.svg')
-
   } else {
     cardClone.querySelector('.card__task-urgent').setAttribute('src', 'images/urgent.svg')
   }
@@ -142,7 +150,17 @@ function clearTaskListBtn(e) {
 function clearTaskList() {
   inputTitle.value = '';
   outputTaskContainer.innerHTML =''
-  taskItems.splice(0, taskItems.length)
+}
+
+function toggleNoLists() {
+  var hiddenMessage = document.querySelector('.no-ideas')
+  if(lists.length !=0){
+    hiddenMessage.classList.add('hidden')
+    cardsArea.classList.add('masonry-layout')
+  } else {
+    hiddenMessage.classList.remove('hidden')
+    cardsArea.classList.remove('masonry-layout')
+  }
 }
 
 window.onload = startCheckYoSelf()

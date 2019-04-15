@@ -2,7 +2,7 @@ class ToDoList{
   constructor(id, title, tasks){
     this.id = id;
     this.title = title;
-    this.tasks = tasks || [];
+    this.tasks = tasks;
     this.urgent = false;
   }
   saveToStorage(lists) {
@@ -22,13 +22,5 @@ class ToDoList{
   }
   updateTask(){
 
-  }
-}
-
-class Tasks{
-  constructor(id, content){
-    this.id = id;
-    this.done = false;
-    this.content = content;
   }
 }

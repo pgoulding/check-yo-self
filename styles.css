@@ -16,6 +16,10 @@ label{
   display: block;
 }
 
+p{
+  margin:0;
+}
+
 .flex {
   display: flex;
 }
@@ -25,13 +29,12 @@ label{
 }  
 
 .hidden {
-  display: hidden;
+  display: none;
 }
 
 .card__task-ico{
   width: 20px;
-  display: inline;
-  align-self: center;
+  margin-right:10px;
 }
 /*---------- Header ----------------*/
 
@@ -54,14 +57,19 @@ span {
 
 .header__input-searchbar {
   height: 70%;
+  background-image: url('images/search.svg');
+  background-repeat: no-repeat;
+  background-size: 30px;
 }
 
+header .form__input{
+  padding-left: 35px;
+}
 /*---------- Aside -----------------*/
 
 aside {
-  min-width: 300px;
   background-color: #587a8b;
-  border-right: #314955;
+  border-right: solid 2px #314955;
   grid-column: 1;
 }
 
@@ -127,7 +135,17 @@ li:hover{
 
 main {
   background-color: #f4f7f8;
+}
+
+.masonry-layout{
   column-width: 13em;
+  padding-right: 20px;
+}
+
+.no-ideas{
+  border: none;
+  text-align: center;
+  margin-top:100px;
 }
 
 /*---------- Article ---------------*/
@@ -164,13 +182,21 @@ h3 {
 .card__task-modify {
  border-top: 1px solid #C7D3D8;
  padding-top: 5px;
- vertical-align: baseline;
  justify-content: space-between;
- height:30px;
+}
+
+.bottom__task-icon{
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .task-checkbox{
   vertical-align: middle;
+}
+
+.card__task-urgent,
+.card__task-delete{
+  margin: auto;
 }
 /*---------- Media Queries ---------*/
 
@@ -180,8 +206,10 @@ h3 {
 }
 
 /*---- Typical Tablet Size ---------*/
-@media screen and (max-width: 768px){
-
+@media screen and (max-width: 600px){
+  body{
+    grid-template-columns: 300px;
+  }
 }
 
 /*---- Large Phones ----------------*/
