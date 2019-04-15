@@ -21,6 +21,7 @@ class ToDoList{
     this.saveToStorage(lists);
   }
   updateTask(){
-
+    this.tasks.done = !this.tasks.done
+    this.saveToStorage(lists)
   }
 }
