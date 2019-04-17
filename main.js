@@ -1,39 +1,88 @@
 // /*---------- Query Selectors -----------*/
 var inputTitle = document.querySelector('#input-title');
 var inputTaskItem = document.querySelector('#input-item');
+var inputSearch = document.querySelector('#input-search');
 
-var outputArray = document.getElementsByClassName('sidebar__task-list')
+var outputArray = document.getElementsByClassName('sidebar__task-list');
 
-var btnTaskListItemDelete = document.getElementsByClassName('img__task-delete')
+var btnTaskListItemDelete = document.getElementsByClassName('img__task-delete');
 var btnAddTask = document.querySelector('#add-task-icon');
 var btnCreateTaskList = document.querySelector('#btn-make-task');
 var btnClear = document.querySelector('#btn-clear');
-
+var btnFilterUrgent = document.querySelector('#btn-filter-urgent') 
 var cardTemplate = document.querySelector('template'); 
 var outputTaskContainer = document.querySelector('.form__task-container');
-var cardsArea = document.querySelector('main')
+var cardsArea = document.querySelector('main');
 /*---------- Global Variables ----------*/
 var lists = JSON.parse(localStorage.getItem('list-card')) || [];
-
 /*---------- Event Listeners -----------*/
-outputTaskContainer.addEventListener('click', removeSingleItem)
-btnAddTask.addEventListener('click', addTaskToList)
+outputTaskContainer.addEventListener('click', removeSingleItem);
+btnAddTask.addEventListener('click', addTaskToList);
 btnCreateTaskList.addEventListener('click', addTaskToArray);
-btnClear.addEventListener('click', clearTaskListBtn)
+btnClear.addEventListener('click', clearTaskListBtn);
+btnFilterUrgent.addEventListener('click', toggleShowUrgent);
+inputSearch.addEventListener('input', searchLists);
+
 /*---------- Functions -----------------*/
 function startCheckYoSelf() {
   fetchLists()
   toggleNoLists()
-}
-
-function reinstateLists(i) {
-  return new ToDoList(lists[i].id, lists[i].title, lists[i].tasks, lists[i].urgent);
+  disableBtns()
 }
 
 function fetchLists() {
   lists.forEach(element => {
     addCardToDOM(element)
   });
+}
+
+function disableBtns(e) {
+  if(inputTitle.value && outputArray.innerText ===0){
+    btnAddTask.disabled = true
+  }
+  
+}
+
+function toggleNoLists() {
+  var hiddenMessage = document.querySelector('.no-ideas');
+  if (lists.length != 0) {
+    hiddenMessage.classList.add('hidden');
+    cardsArea.classList.add('masonry-layout');
+  } else {
+    hiddenMessage.classList.remove('hidden');
+    cardsArea.classList.remove("masonry-layout");
+  }
+}
+
+function reinstateLists(i) {
+  return new ToDoList(
+    lists[i].id,
+    lists[i].title,
+    lists[i].tasks,
+    lists[i].urgent
+  );
+}
+
+function searchLists(e) {
+  e.preventDefault()
+  var searchQuery = inputSearch.value.toLowerCase();
+  var searchResults = lists.filter(card =>
+      card.title.toLowerCase().includes(searchQuery)
+  );
+  cardsArea.innerHTML = '';
+  searchResults.forEach(list => addCardToDOM(list));
+}
+
+function toggleShowUrgent(e) {
+  e.preventDefault()
+  btnFilterUrgent.classList.toggle('urgent');
+  if(btnFilterUrgent.classList.contains('urgent')) {
+    var filterResults = lists.filter(list => list.urgent === true);
+  }else{
+    var filterResults = lists.filter(list => list.urgent === list.urgent)
+  }
+  cardsArea.innerHTML = "";
+  filterResults.forEach(idea => addCardToDOM(idea));
 }
 
 function addTaskToList(e) {
@@ -49,7 +98,7 @@ function addTaskToArray(e){
   var taskArray = []
  for (let i = 0; i < outputArray.length; i++) {
    var newTask = {
-     id: `${i}${Date.now()}`,
+     id: `1${i}${Date.now()}`,
      done: false,
      content: outputArray[i].innerText
    }
@@ -80,7 +129,7 @@ function addCardToDOM(list) {
 function taskToCard(newCard) {
   var taskListIteration = '';
   for (var i = 0; i < newCard.tasks.length; i++) {
-    taskListIteration += `<li data-id=${newCard.tasks[i].id}><img src="images/checkbox.svg" class="card__task-ico">${newCard.tasks[i].content}</li>`
+    taskListIteration += `<li class="card__task-checkbox" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico">${newCard.tasks[i].content}</li>`
   } return taskListIteration;
 }
 
@@ -88,8 +137,9 @@ function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
   cardClone.querySelector('.card-title').innerText = list.title;
   cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
-  cardClone.querySelector('.card__task-delete').innerHTML = ``
+  // cardClone.querySelector('.card__task-delete').innerHTML = ``
   cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`)
+  // cardClone.querySelector('card__task-container').classList.add(`${urgentBackground(list)}`)
 }
 
 function cardActions(e) {
@@ -101,14 +151,10 @@ function cardActions(e) {
   if (target.matches('.card__task-urgent')) {
     urgentify(target);
   }
+  if (target.matches('.card__task-checkbox')){
+    markItems(target);
+  }
   toggleNoLists()
-}
-
-function getTaskItemIndex(target){
-  var parent = target.closest('li');
-  var parentID = parseInt(parent.dataset.id);
-  var itemIndex = lists.tasks.findIndex(element => element.id === parentID);
-  return itemIndex;
 }
 
 function getListIndex(target) {
@@ -126,7 +172,6 @@ function removeCard(target) {
 }
 
 function removeSingleItem(e) {
-  var index = 
   e.target.closest('li').remove()
   console.log(e.target)
 }
@@ -134,18 +179,28 @@ function removeSingleItem(e) {
 function urgentify(target) {
   var listIndex = getListIndex(target)
   var toDoCard = reinstateLists(listIndex)
-  toDoCard.updateUrgent(listIndex)
-  if (toDoCard.urgent === true) {
-    target.setAttribute('src', 'images/urgent-active.svg');
-    target.closest('article').classList.add('urgent-background')
-  } else if (toDoCard.urgent === false) {
-    target.setAttribute('src', 'images/urgent.svg');
-    target.closest('article').classList.remove('urgent-background')
+  toDoCard.updateToDo()
+  target.setAttribute('src', `${toDoCard.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`)
+}
+
+function urgentBackground(taskList) {
+  var newClass = ''
+  if(taskList.urgent === true){
+    newClass = `urgent`
+  }else{
+    return 'not-urgent'
   }
 }
 
-function markItems(target){
-
+function markItems(target) {
+  var parent = target.closest('article')
+  var child = target.closest('li')
+  var listIndex = getListIndex(target);
+  var toDoCard = reinstateLists(listIndex);
+  const targetList = lists.find(list => list.id == parent.dataset.id);
+  const targetIndex = targetList.tasks.findIndex(task => task.id === child.dataset.id)
+  toDoCard.updateTask(targetIndex)
+  changeCheckedImage()
 }
 
 function clearTaskListBtn(e) {
@@ -156,17 +211,6 @@ function clearTaskListBtn(e) {
 function clearTaskList() {
   inputTitle.value = '';
   outputTaskContainer.innerHTML =''
-}
-
-function toggleNoLists() {
-  var hiddenMessage = document.querySelector('.no-ideas')
-  if(lists.length !=0){
-    hiddenMessage.classList.add('hidden')
-    cardsArea.classList.add('masonry-layout')
-  } else {
-    hiddenMessage.classList.remove('hidden')
-    cardsArea.classList.remove('masonry-layout')
-  }
 }
 
 window.onload = startCheckYoSelf()
