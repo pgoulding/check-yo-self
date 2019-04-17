@@ -6,10 +6,10 @@
 
 body {
   display: grid;
-  height: 100vh;
+  font-family: 'Open Sans', sans-serif;
   grid-template-columns: 300px auto;
   grid-template-rows: 50px 1fr;
-  font-family: 'Open Sans', sans-serif;
+  height: 100vh;
 }
 
 label{
@@ -32,21 +32,25 @@ p{
   display: none;
 }
 
-.card__task-ico{
-  width: 20px;
+.card__task-ico {
   margin-right:10px;
+  width: 20px;
 }
 
-:disabled{
+:disabled {
   opacity: .5;
+}
+
+button:hover {
+  background-color: red;
 }
 /*---------- Header ----------------*/
 
 header {
+  align-items: center;
   background-color: #1f1f3d;
   grid-column: 1/ span 2;
   grid-row: 1; 
-  align-items: center;
   justify-content: space-between;
   padding:0 10px;
 }
@@ -60,14 +64,16 @@ span {
 }
 
 .header__input-searchbar {
-  height: 70%;
   background-image: url('images/search.svg');
   background-repeat: no-repeat;
+  background-position: left;
   background-size: 30px;
+  background-position-x: 2px;
 }
 
 header .form__input{
-  padding-left: 35px;
+  padding-left: 40px;
+  margin-left: 10px;
 }
 
 .btn__icon-search{
@@ -90,9 +96,9 @@ form {
 
 aside button {
   background-color: #1f1f3d;
+  border: 0;
   color: #ffffff;
   outline: none;
-  border: 0;
 }
 
 ul{
@@ -107,18 +113,19 @@ li{
 li:hover{
   font-weight: 700;
 }
+
 .form__input {
   border-radius: 3px;
-  margin: 10px 0;
-  height: 40px;
   border: 2px solid #1f1f3d;
+  height: 40px;
+  margin: 10px 0;
   padding-left: 5px;
 }
 
 .form__input-task{
-  width: 90%;
-  border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  width: 90%;
 }
 
 .form__checkbox-task {
@@ -130,11 +137,11 @@ li:hover{
 }
 
 .form__task-icon{
-  font-size: 2em;
-  margin-top: 10px;
-  height: 40px;
-  border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+  font-size: 2em;
+  height: 40px;
+  margin-top: 10px;
 }
 
 .error{
@@ -157,8 +164,8 @@ main {
 
 .no-ideas{
   border: none;
-  text-align: center;
   margin-top:100px;
+  text-align: center;
 }
 
 /*---------- Article ---------------*/
@@ -171,17 +178,17 @@ article {
 }
 
 h3 {
-  margin: 0;
   border-bottom: 1px solid #C7D3D8;
+  margin: 0;
 }
 
 .card__task-container {
   background-color: #fbfdff;
   border: 1px solid #C7D3D8;
-  margin:10px;
-  padding: 10px;
   flex-direction: column;
   justify-content: space-between;
+  margin:10px;
+  padding: 10px;
 }
 
 .card__task-top {
@@ -194,8 +201,8 @@ h3 {
 
 .card__task-modify {
  border-top: 1px solid #C7D3D8;
- padding-top: 5px;
  justify-content: space-between;
+ padding-top: 5px;
 }
 
 .bottom__task-icon{
@@ -217,24 +224,22 @@ h3 {
 }
 /*---------- Media Queries ---------*/
 
-/*---- Large Tablet/Small Comp -----*/
-@media screen and (max-width: 1024px){
-
-}
-
-/*---- Typical Tablet Size ---------*/
-@media screen and (max-width: 600px){
-  body{
-    grid-template-columns: 300px;
+@media screen and (max-width: 523px){
+  body {
+  display: flex;
+  flex-direction: column;
   }
-}
 
-/*---- Large Phones ----------------*/
-@media screen and (max-width: 440px){
+  header{
+    flex-direction: column;
+  }
 
-}
+  .form__input-task{
+    width:95%;
+  }
 
-/*---- Small Screens ---------------*/
-@media screen and (max-width: 320px){
-
+  header .form__input{
+    margin-left: 0;
+    width: 100%;
+  }
 }

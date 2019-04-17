@@ -31,12 +31,10 @@ function startCheckYoSelf() {
 }
 
 function fetchLists() {
-  lists.forEach(element => {
-    addCardToDOM(element)
-  });
+  lists.forEach(element => addCardToDOM(element));
 }
 
-function disableBtns(e) {
+function disableBtns() {
   if(inputTitle.value && outputArray.innerText ===0){
     btnAddTask.disabled = true
   }
@@ -137,9 +135,8 @@ function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
   cardClone.querySelector('.card-title').innerText = list.title;
   cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
-  // cardClone.querySelector('.card__task-delete').innerHTML = ``
   cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`)
-  // cardClone.querySelector('card__task-container').classList.add(`${urgentBackground(list)}`)
+  // cardClone.querySelector('card__task-container').style.backgroundColor=`${list.urgent === true ? 'yellow' : 'white'}`;
 }
 
 function cardActions(e) {
@@ -152,7 +149,7 @@ function cardActions(e) {
     urgentify(target);
   }
   if (target.matches('.card__task-checkbox')){
-    markItems(target);
+    checkItemDOM(target);
   }
   toggleNoLists()
 }
@@ -179,17 +176,26 @@ function removeSingleItem(e) {
 function urgentify(target) {
   var listIndex = getListIndex(target)
   var toDoCard = reinstateLists(listIndex)
+  target.setAttribute(`src`, `${toDoCard.urgent === false ? `images/urgent-active.svg` : `images/urgent.svg`}`)
   toDoCard.updateToDo()
-  target.setAttribute('src', `${toDoCard.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`)
 }
 
 function urgentBackground(taskList) {
-  var newClass = ''
   if(taskList.urgent === true){
     newClass = `urgent`
   }else{
     return 'not-urgent'
   }
+}
+
+function checkItemDOM(target) {
+  if(target.getAttribute('src', 'images/checkbox.svg') === true){
+    target.setAttribute('src', 'images/checkbox-active.svg')
+    debugger;
+  } else {
+    target.setAttribute('src', 'images/checkbox.svg')
+  }
+  markItems(target)
 }
 
 function markItems(target) {
@@ -200,7 +206,6 @@ function markItems(target) {
   const targetList = lists.find(list => list.id == parent.dataset.id);
   const targetIndex = targetList.tasks.findIndex(task => task.id === child.dataset.id)
   toDoCard.updateTask(targetIndex)
-  changeCheckedImage()
 }
 
 function clearTaskListBtn(e) {
