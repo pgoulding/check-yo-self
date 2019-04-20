@@ -120,10 +120,10 @@ function taskToCard(newCard) {
 
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
+  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-background` : null}`)
   cardClone.querySelector('.card-title').innerText = list.title;
   cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
   cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`);
-  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-background`: null}`)
 }
 
 function cardActions(e) {
@@ -150,9 +150,14 @@ function getListIndex(target) {
 
 function removeCard(target) {
   var listIndex = getListIndex(target)
-  var task = reinstateLists(listIndex)
-  target.closest('article').remove();
-  task.deleteFromStorage(listIndex);
+  var card = reinstateLists(listIndex)
+  var unchecked = card.tasks.filter(item => item.done === false)
+  if (unchecked.length === 0){
+    target.closest('article').remove();
+    card.deleteFromStorage(listIndex);
+  } else {
+    alert('You gotta finish all the tasks before you delete me!') 
+  }
 }
 
 function removeSingleItem(e) {
@@ -166,14 +171,6 @@ function urgentify(target) {
   target.setAttribute(`src`, `${toDoCard.urgent === false ? `images/urgent-active.svg` : `images/urgent.svg`}`)
   target.parentNode.parentNode.parentNode.classList.toggle('urgent-background');
   toDoCard.updateToDo()
-}
-
-function urgentBackground(taskList) {
-  if(taskList.urgent === true){
-    newClass = `urgent`
-  }else{
-    return 'not-urgent'
-  }
 }
 
 function markItems(target) {
