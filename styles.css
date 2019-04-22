@@ -40,13 +40,13 @@ p{
 :disabled {
   opacity: .5;
 }
-/* 
+
 button:hover {
   background-color: red;
 }
 button:disbaled{
   background-color: #1f1f3d;
-} */
+} 
 /*---------- Header ----------------*/
 
 header {
@@ -63,7 +63,7 @@ h1 {
 }
 
 span {
-  color: yellow;
+  color: #ffc30c;
 }
 
 .header__input-searchbar {
@@ -178,6 +178,7 @@ article {
   margin:  0.25rem;
   padding:  1rem;
   width:  100%; 
+  color: #1f1f3d;
 }
 
 h3 {
@@ -185,13 +186,20 @@ h3 {
   margin: 0;
 }
 
+/* .urgent-card{
+  border-bottom: 1px solid #ffc30c;
+} */
+
 .card__task-container {
-  background-color: #fbfdff;
+  background-color: #fafdff;
   border: 1px solid #C7D3D8;
   flex-direction: column;
   justify-content: space-between;
   margin:10px;
   padding: 10px;
+}
+.card__task-container::after{
+  border: 1px solid #C7D3D8;
 }
 
 .card__task-top {
@@ -201,6 +209,7 @@ h3 {
 
 .card__task-checked{
   font-style: italic;
+  color: #3c6577;
 }
 
 .card__task-unchecked {
@@ -227,9 +236,14 @@ h3 {
   margin: auto;
 }
 
-.urgent-background{
-  background-color: rgb(255, 219, 58);
+.urgent-card{
+  background-color: #ffe89d;
+  border: 1px solid #ffc30c;
 }
+.urgent-card.card__task-modify{
+  border-top: 1px solid #ffc30c;
+}
+
 /*---------- Media Queries ---------*/
 
 @media screen and (max-width: 523px){

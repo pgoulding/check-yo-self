@@ -114,15 +114,15 @@ function addCardToDOM(list) {
 function taskToCard(newCard) {
   var taskListIteration = '';
   for (var i = 0; i < newCard.tasks.length; i++) {
-    taskListIteration += `<li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked': null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico">${newCard.tasks[i].content}</li>`
+    taskListIteration += `<li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id} contenteditable="true"><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico">${newCard.tasks[i].content}</li>`
   } return taskListIteration;
 }
 
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
-  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-background` : 'empty-class'}`)
+  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-card` : 'empty-class'}`)
   cardClone.querySelector('.card-title').innerText = list.title;
-  cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
+  cardClone.querySelector('.card__task-list').innerHTML = `${taskToCard(list)}`;
   cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`);
 }
 
@@ -168,9 +168,14 @@ function removeSingleItem(e) {
 function urgentify(target) {
   var listIndex = getListIndex(target)
   var toDoCard = reinstateLists(listIndex)
-  target.setAttribute(`src`, `${toDoCard.urgent === false ? `images/urgent-active.svg` : `images/urgent.svg`}`)
-  target.parentNode.parentNode.parentNode.classList.toggle('urgent-background');
+  updateCardUrgentDOM(target, toDoCard)
   toDoCard.updateToDo()
+}
+
+function updateCardUrgentDOM(target, toDoCard){
+  target.setAttribute(`src`, `${toDoCard.urgent === false ? `images/urgent-active.svg` : `images/urgent.svg`}`)
+  target.parentNode.parentNode.parentNode.classList.toggle('urgent-card');
+
 }
 
 function markItems(target) {
