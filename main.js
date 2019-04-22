@@ -114,7 +114,7 @@ function addCardToDOM(list) {
 function taskToCard(newCard) {
   var taskListIteration = '';
   for (var i = 0; i < newCard.tasks.length; i++) {
-    taskListIteration += `<li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id} contenteditable="true"><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico">${newCard.tasks[i].content}</li>`
+    taskListIteration += `<label><li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico"><p contenteditable="true">${newCard.tasks[i].content}</p></li></label>`
   } return taskListIteration;
 }
 
@@ -191,8 +191,8 @@ function markItems(target) {
 
 function updateItemDOM(target, toDoCard, targetIndex) {
   target.firstChild.setAttribute('src', `${toDoCard.tasks[targetIndex].done === true ? `images/checkbox-active.svg` : `images/checkbox.svg`}`)
-  target.classList.add(`${toDoCard.tasks[targetIndex].done === true ? `card__task-checked` : 'empty-class' }`)
-  target.classList.remove(`${toDoCard.tasks[targetIndex].done === false ? `card__task-checked`: 'empty-class'}`)
+  debugger;
+  target.classList.toggle('card__task-checked')
 }
 
 function clearTaskListBtn(e) {
