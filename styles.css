@@ -40,10 +40,13 @@ p{
 :disabled {
   opacity: .5;
 }
-
+/* 
 button:hover {
   background-color: red;
 }
+button:disbaled{
+  background-color: #1f1f3d;
+} */
 /*---------- Header ----------------*/
 
 header {
@@ -192,11 +195,16 @@ h3 {
 }
 
 .card__task-top {
-
+  margin: 10px 0;
 }
 
-.card__task-list {
 
+.card__task-checked{
+  font-style: italic;
+}
+
+.card__task-unchecked {
+  font-style: normal
 }
 
 .card__task-modify {
@@ -220,7 +228,7 @@ h3 {
 }
 
 .urgent-background{
-  background-color: yellow;
+  background-color: rgb(255, 219, 58);
 }
 /*---------- Media Queries ---------*/
 

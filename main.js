@@ -24,18 +24,10 @@ inputSearch.addEventListener('input', searchLists);
 function startCheckYoSelf() {
   fetchLists()
   toggleNoLists()
-  disableBtns()
 }
 
 function fetchLists() {
   lists.forEach(element => addCardToDOM(element));
-}
-
-function disableBtns() {
-  if(inputTitle.value && outputArray.innerText ===0){
-    btnAddTask.disabled = true
-  }
-  
 }
 
 function toggleNoLists() {
@@ -90,7 +82,10 @@ function addTaskToArray(e){
   e.preventDefault()
   var taskArray = []
  for (let i = 0; i < outputArray.length; i++) {
-   var newTask = {id: `1${i}${Date.now()}`, done: false, content: outputArray[i].innerText
+   var newTask = {
+     id: `1${i}${Date.now()}`, 
+     done: false, 
+     content: outputArray[i].innerText
    }
    taskArray.push(newTask)
  }
@@ -119,16 +114,16 @@ function addCardToDOM(list) {
 function taskToCard(newCard) {
   var taskListIteration = '';
   for (var i = 0; i < newCard.tasks.length; i++) {
-    taskListIteration += `<li class="card__task-checkbox" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico">${newCard.tasks[i].content}</li>`
+    taskListIteration += `<li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked': null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico">${newCard.tasks[i].content}</li>`
   } return taskListIteration;
 }
 
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
+  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-background` : null}`)
   cardClone.querySelector('.card-title').innerText = list.title;
   cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
-  cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`)
-  // cardClone.querySelector('card__task-container').style.backgroundColor=`${list.urgent === true ? 'yellow' : 'white'}`;
+  cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`);
 }
 
 function cardActions(e) {
@@ -141,7 +136,7 @@ function cardActions(e) {
     urgentify(target);
   }
   if (target.matches('.card__task-checkbox')){
-    changeCheckbox(target)
+    markItems(target)
   }
   toggleNoLists()
 }
@@ -155,9 +150,14 @@ function getListIndex(target) {
 
 function removeCard(target) {
   var listIndex = getListIndex(target)
-  var task = reinstateLists(listIndex)
-  target.closest('article').remove();
-  task.deleteFromStorage(listIndex);
+  var card = reinstateLists(listIndex)
+  var unchecked = card.tasks.filter(item => item.done === false)
+  if (unchecked.length === 0){
+    target.closest('article').remove();
+    card.deleteFromStorage(listIndex);
+  } else {
+    alert('You gotta finish all the tasks before you delete me!') 
+  }
 }
 
 function removeSingleItem(e) {
@@ -169,36 +169,8 @@ function urgentify(target) {
   var listIndex = getListIndex(target)
   var toDoCard = reinstateLists(listIndex)
   target.setAttribute(`src`, `${toDoCard.urgent === false ? `images/urgent-active.svg` : `images/urgent.svg`}`)
+  target.parentNode.parentNode.parentNode.classList.toggle('urgent-background');
   toDoCard.updateToDo()
-}
-
-function urgentBackground(taskList) {
-  if(taskList.urgent === true){
-    newClass = `urgent`
-  }else{
-    return 'not-urgent'
-  }
-}
-
-// function checkItemDOM(target) {
-//   if(target.getAttribute('src', 'images/checkbox.svg') === true){
-//     target.setAttribute('src', 'images/checkbox-active.svg')
-//     debugger;
-//   } else {
-//     target.setAttribute('src', 'images/checkbox.svg')
-//   }
-// }
-
-function changeCheckbox(target) {
-  if (target.firstChild.src === "images/checkbox.svg"){
-      target.firstChild.src = "images/checkbox-active.svg";
-    } else {
-      target.firstChild.src = "images/checkbox.svg";
-    }
-  // target.firstChild.src = (target.firstChild.src === unchecked) ? checked : unchecked;
-  console.log(target.firstChild.src)
-  console.log(target)
-  markItems(target)
 }
 
 function markItems(target) {
@@ -209,6 +181,13 @@ function markItems(target) {
   const targetList = lists.find(list => list.id == parent.dataset.id);
   const targetIndex = targetList.tasks.findIndex(task => task.id === child.dataset.id)
   toDoCard.updateTask(targetIndex)
+  updateItemDOM(target, toDoCard, targetIndex)
+}
+
+function updateItemDOM(target, toDoCard, targetIndex) {
+  target.firstChild.setAttribute('src', `${toDoCard.tasks[targetIndex].done === true ? `images/checkbox-active.svg` : `images/checkbox.svg`}`)
+  target.classList.add(`${toDoCard.tasks[targetIndex].done === true ? `card__task-checked` : null }`)
+  target.classList.remove(`${toDoCard.tasks[targetIndex].done === false ? `card__task-checked`: null}`)
 }
 
 function clearTaskListBtn(e) {

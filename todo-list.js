@@ -13,7 +13,6 @@ class ToDoList {
     this.saveToStorage(lists);
   }
   updateToDo() {
-    // this.urgent = !this.urgent;
     let newList = lists.map(listItem => {
       if (this.id === listItem.id) {
         listItem.urgent = !listItem.urgent;
@@ -26,4 +25,4 @@ class ToDoList {
     this.tasks[i].done = !this.tasks[i].done;
     this.saveToStorage(lists);
   }
-}
+} 
