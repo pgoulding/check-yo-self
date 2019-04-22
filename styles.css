@@ -69,11 +69,12 @@ span {
 }
 
 .header__input-searchbar {
-  /* background-image: url('images/search.svg');
-  background-repeat: no-repeat;
-  background-position: left;
-  background-size: 30px;
-  background-position-x: 2px; */
+  width: 200px;
+  transition: width 0.4s ease-in-out;
+}
+
+.header__input-searchbar:focus {
+  width: 500px;
 }
 
 header .form__input{
@@ -91,6 +92,7 @@ header .form__input{
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
 }
+
 /*---------- Aside -----------------*/
 
 aside {
