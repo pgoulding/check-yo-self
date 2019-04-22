@@ -32,12 +32,12 @@ function fetchLists() {
 
 function toggleNoLists() {
   var hiddenMessage = document.querySelector('.no-ideas');
-  if (lists.length != 0) {
-    hiddenMessage.classList.add('hidden');
-    cardsArea.classList.add('masonry-layout');
-  } else {
+  if (lists.length === 0) {
     hiddenMessage.classList.remove('hidden');
     cardsArea.classList.remove("masonry-layout");
+  } else {
+    hiddenMessage.classList.add('hidden');
+    cardsArea.classList.add('masonry-layout');
   }
 }
 

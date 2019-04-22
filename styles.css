@@ -153,13 +153,14 @@ p:focus{
   margin-top: 10px;
 }
 
+.form__container-filter{
+  border-top: solid 2px #436374;
+}
+
 .error{
   border: 3px solid red;
 }
 
-.urgent{
-  background-color: red;
-}
 /*---------- Main ------------------*/
 
 main {
@@ -204,6 +205,7 @@ h3 {
   font-style: normal;
   padding: 10px;
 }
+
 .card__task-checked{
   font-style: italic;
   color: #3c6577;
@@ -235,8 +237,13 @@ h3 {
   background-color: #ffe89d;
   border: 1px solid #ffc30c;
 }
-.urgent-card.card__task-modify{
+
+.urgent-card .card__task-modify{
   border-top: 1px solid #ffc30c;
+}
+
+.urgent-card h3{
+  border-bottom: 1px solid #ffc30c;
 }
 
 /*---------- Media Queries ---------*/
