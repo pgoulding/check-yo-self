@@ -120,7 +120,7 @@ function taskToCard(newCard) {
 
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
-  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-background` : null}`)
+  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-background` : 'empty-class'}`)
   cardClone.querySelector('.card-title').innerText = list.title;
   cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
   cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`);
@@ -186,8 +186,8 @@ function markItems(target) {
 
 function updateItemDOM(target, toDoCard, targetIndex) {
   target.firstChild.setAttribute('src', `${toDoCard.tasks[targetIndex].done === true ? `images/checkbox-active.svg` : `images/checkbox.svg`}`)
-  target.classList.add(`${toDoCard.tasks[targetIndex].done === true ? `card__task-checked` : null }`)
-  target.classList.remove(`${toDoCard.tasks[targetIndex].done === false ? `card__task-checked`: null}`)
+  target.classList.add(`${toDoCard.tasks[targetIndex].done === true ? `card__task-checked` : 'empty-class' }`)
+  target.classList.remove(`${toDoCard.tasks[targetIndex].done === false ? `card__task-checked`: 'empty-class'}`)
 }
 
 function clearTaskListBtn(e) {
