@@ -135,8 +135,9 @@ function cardActions(e) {
   if (target.matches('.card__task-urgent')) {
     urgentify(target);
   }
-  if (target.matches('.card__task-checkbox')){
+  if (target.matches('.card__task-ico')){
     markItems(target)
+  
   }
   toggleNoLists()
 }
@@ -190,9 +191,8 @@ function markItems(target) {
 }
 
 function updateItemDOM(target, toDoCard, targetIndex) {
-  target.firstChild.setAttribute('src', `${toDoCard.tasks[targetIndex].done === true ? `images/checkbox-active.svg` : `images/checkbox.svg`}`)
-  debugger;
-  target.classList.toggle('card__task-checked')
+  target.setAttribute('src', `${toDoCard.tasks[targetIndex].done === true ? `images/checkbox-active.svg` : `images/checkbox.svg`}`)
+  target.parentNode.classList.toggle('card__task-checked')
 }
 
 function clearTaskListBtn(e) {
