@@ -69,20 +69,27 @@ span {
 }
 
 .header__input-searchbar {
-  background-image: url('images/search.svg');
+  /* background-image: url('images/search.svg');
   background-repeat: no-repeat;
   background-position: left;
   background-size: 30px;
-  background-position-x: 2px;
+  background-position-x: 2px; */
 }
 
 header .form__input{
-  padding-left: 40px;
-  margin-left: 10px;
+  padding-left: 5px;
+  border: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .btn__icon-search{
   height: 40px;
+  padding: 5px 0;
+  background-color:rgb(189, 201, 208);
+  margin: 10px 0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 /*---------- Aside -----------------*/
 
@@ -222,6 +229,7 @@ h3 {
   flex-direction: column;
   justify-content: space-evenly;
   padding: 10px;
+  color: #3c6577;
 }
 
 .task-checkbox{
@@ -245,7 +253,9 @@ h3 {
 .urgent-card h3{
   border-bottom: 1px solid #ffc30c;
 }
-
+.urgent-card .bottom__container-urgent{
+  color: #b23a25;
+}
 /*---------- Media Queries ---------*/
 
 @media screen and (max-width: 523px){
