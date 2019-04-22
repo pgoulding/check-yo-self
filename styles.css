@@ -119,6 +119,10 @@ li:hover{
   font-weight: 700;
 }
 
+p:focus{
+  font-weight: 400;
+}
+
 .form__input {
   border-radius: 3px;
   border: 2px solid #1f1f3d;
