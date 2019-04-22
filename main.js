@@ -114,7 +114,7 @@ function addCardToDOM(list) {
 function taskToCard(newCard) {
   var taskListIteration = '';
   for (var i = 0; i < newCard.tasks.length; i++) {
-    taskListIteration += `<label><li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico"><p contenteditable="true">${newCard.tasks[i].content}</p></li></label>`
+    taskListIteration += `<label><li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico card__mark-ico"><p contenteditable="true">${newCard.tasks[i].content}</p></li></label>`
   } return taskListIteration;
 }
 
@@ -135,7 +135,7 @@ function cardActions(e) {
   if (target.matches('.card__task-urgent')) {
     urgentify(target);
   }
-  if (target.matches('.card__task-ico')){
+  if (target.matches('.card__mark-ico')){
     markItems(target)
   
   }
