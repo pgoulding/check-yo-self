@@ -73,7 +73,7 @@ function toggleShowUrgent(e) {
 function addTaskToList(e) {
   e.preventDefault()
   if(inputTaskItem.value){
-    outputTaskContainer.innerHTML += `<li class="sidebar__task-list"><img src="images/delete.svg" class="card__task-ico img__task-delete"> ${inputTaskItem.value}</li>`
+    outputTaskContainer.innerHTML += `<li class="sidebar__task-list"><img src="images/delete.svg" class="card__task-ico img__task-delete"><p contenteditable="true">${inputTaskItem.value}<p></li>`
     inputTaskItem.value = '';
   }
 }
@@ -137,7 +137,6 @@ function cardActions(e) {
   }
   if (target.matches('.card__mark-ico')){
     markItems(target)
-  
   }
   toggleNoLists()
 }
@@ -162,8 +161,9 @@ function removeCard(target) {
 }
 
 function removeSingleItem(e) {
-  e.target.closest('li').remove()
-  console.log(e.target)
+  if (e.target.matches('.img__task-delete')){
+    e.target.closest('li').remove()
+  }
 }
 
 function urgentify(target) {
