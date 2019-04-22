@@ -19,6 +19,7 @@ class ToDoList {
       }
       return listItem;
     });
+    
     this.saveToStorage(newList);
   }
   updateTask(i) {

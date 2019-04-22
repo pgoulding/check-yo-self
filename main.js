@@ -32,12 +32,12 @@ function fetchLists() {
 
 function toggleNoLists() {
   var hiddenMessage = document.querySelector('.no-ideas');
-  if (lists.length != 0) {
-    hiddenMessage.classList.add('hidden');
-    cardsArea.classList.add('masonry-layout');
-  } else {
+  if (lists.length === 0) {
     hiddenMessage.classList.remove('hidden');
     cardsArea.classList.remove("masonry-layout");
+  } else {
+    hiddenMessage.classList.add('hidden');
+    cardsArea.classList.add('masonry-layout');
   }
 }
 
@@ -73,7 +73,7 @@ function toggleShowUrgent(e) {
 function addTaskToList(e) {
   e.preventDefault()
   if(inputTaskItem.value){
-    outputTaskContainer.innerHTML += `<li class="sidebar__task-list"><img src="images/delete.svg" class="card__task-ico img__task-delete"> ${inputTaskItem.value}</li>`
+    outputTaskContainer.innerHTML += `<li class="sidebar__task-list"><img src="images/delete.svg" class="card__task-ico img__task-delete"><p contenteditable="true">${inputTaskItem.value}<p></li>`
     inputTaskItem.value = '';
   }
 }
@@ -114,15 +114,15 @@ function addCardToDOM(list) {
 function taskToCard(newCard) {
   var taskListIteration = '';
   for (var i = 0; i < newCard.tasks.length; i++) {
-    taskListIteration += `<li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked': null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico">${newCard.tasks[i].content}</li>`
+    taskListIteration += `<label><li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico card__mark-ico"><p contenteditable="true">${newCard.tasks[i].content}</p></li></label>`
   } return taskListIteration;
 }
 
 function cloneQueries(cardClone, list) {
   cardClone.querySelector('.card').dataset.id = list.id;
-  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-background` : null}`)
+  cardClone.querySelector('.card').classList.add(`${list.urgent === true ? `urgent-card` : 'empty-class'}`)
   cardClone.querySelector('.card-title').innerText = list.title;
-  cardClone.querySelector('.card__task-list').innerHTML = `<li>${taskToCard(list)}</li>`;
+  cardClone.querySelector('.card__task-list').innerHTML = `${taskToCard(list)}`;
   cardClone.querySelector('.card__task-urgent').setAttribute('src', `${list.urgent === true ? `images/urgent-active.svg` : `images/urgent.svg`}`);
 }
 
@@ -135,7 +135,7 @@ function cardActions(e) {
   if (target.matches('.card__task-urgent')) {
     urgentify(target);
   }
-  if (target.matches('.card__task-checkbox')){
+  if (target.matches('.card__mark-ico')){
     markItems(target)
   }
   toggleNoLists()
@@ -161,16 +161,22 @@ function removeCard(target) {
 }
 
 function removeSingleItem(e) {
-  e.target.closest('li').remove()
-  console.log(e.target)
+  if (e.target.matches('.img__task-delete')){
+    e.target.closest('li').remove()
+  }
 }
 
 function urgentify(target) {
   var listIndex = getListIndex(target)
   var toDoCard = reinstateLists(listIndex)
-  target.setAttribute(`src`, `${toDoCard.urgent === false ? `images/urgent-active.svg` : `images/urgent.svg`}`)
-  target.parentNode.parentNode.parentNode.classList.toggle('urgent-background');
+  updateCardUrgentDOM(target, toDoCard)
   toDoCard.updateToDo()
+}
+
+function updateCardUrgentDOM(target, toDoCard){
+  target.setAttribute(`src`, `${toDoCard.urgent === false ? `images/urgent-active.svg` : `images/urgent.svg`}`)
+  target.parentNode.parentNode.parentNode.classList.toggle('urgent-card');
+
 }
 
 function markItems(target) {
@@ -185,9 +191,8 @@ function markItems(target) {
 }
 
 function updateItemDOM(target, toDoCard, targetIndex) {
-  target.firstChild.setAttribute('src', `${toDoCard.tasks[targetIndex].done === true ? `images/checkbox-active.svg` : `images/checkbox.svg`}`)
-  target.classList.add(`${toDoCard.tasks[targetIndex].done === true ? `card__task-checked` : null }`)
-  target.classList.remove(`${toDoCard.tasks[targetIndex].done === false ? `card__task-checked`: null}`)
+  target.setAttribute('src', `${toDoCard.tasks[targetIndex].done === true ? `images/checkbox-active.svg` : `images/checkbox.svg`}`)
+  target.parentNode.classList.toggle('card__task-checked')
 }
 
 function clearTaskListBtn(e) {
