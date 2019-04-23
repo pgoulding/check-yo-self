@@ -78,6 +78,12 @@ function addTaskToList(e) {
   }
 }
 
+function removeSingleItem(e) {
+  if (e.target.matches('.img__task-delete')) {
+    e.target.closest('li').remove()
+  }
+}
+
 function addTaskToArray(e){
   e.preventDefault()
   var taskArray = []
@@ -114,7 +120,7 @@ function addCardToDOM(list) {
 function taskToCard(newCard) {
   var taskListIteration = '';
   for (var i = 0; i < newCard.tasks.length; i++) {
-    taskListIteration += `<label><li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico card__mark-ico"><p contenteditable="true">${newCard.tasks[i].content}</p></li></label>`
+    taskListIteration += `<label><li class="card__task-checkbox ${newCard.tasks[i].done === true ? 'card__task-checked' : null}" data-id=${newCard.tasks[i].id}><img src=${newCard.tasks[i].done === true ? `"images/checkbox-active.svg"` : `"images/checkbox.svg"`} class="card__task-ico card__mark-ico"><p class="card__task-content">${newCard.tasks[i].content}</p></li></label>`
   } return taskListIteration;
 }
 
@@ -138,6 +144,9 @@ function cardActions(e) {
   if (target.matches('.card__mark-ico')){
     markItems(target)
   }
+  // if (target.matches('.card__task-content')){
+  //   editContentText(target)
+  // }
   toggleNoLists()
 }
 
@@ -147,6 +156,21 @@ function getListIndex(target) {
   var listIndex = lists.findIndex(element => element.id === parentID);
   return listIndex;
 }
+
+// function editContentText(target) {
+//   var editedText = target.innerText;
+//   // var listIndex = lists.indexOf(targetList);
+//   debugger;
+//   var parsedId = parseInt(target.parentNode.parentNode.parentNode.parentNode.getAttribute('data-id'));
+//   debugger;
+//   var toDoCard = lists.find(list => list.id === parsedId);
+//   if (target.matches('.card-title')) {
+//     targetlist.updateTitle(targetList, editedText)
+//   }
+//   if (target.matches('.card-body')) {
+//     targetList.updateBody(targetList, editedText)
+//   }
+// }
 
 function removeCard(target) {
   var listIndex = getListIndex(target)
@@ -160,11 +184,6 @@ function removeCard(target) {
   }
 }
 
-function removeSingleItem(e) {
-  if (e.target.matches('.img__task-delete')){
-    e.target.closest('li').remove()
-  }
-}
 
 function urgentify(target) {
   var listIndex = getListIndex(target)

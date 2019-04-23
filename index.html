@@ -11,7 +11,7 @@
 <body>
 <header class="flex">
   <h1>CHECK<span> YO' </span>SELF</h1>
-  <div class="flex">
+  <div class="flex search-container">
     <img src="images/search.svg" class="btn__icon-search">
     <input id="input-search" class="header__input-searchbar form__input" placeholder="search">
   </div>
@@ -25,7 +25,7 @@
       </ul>
     </section>
     <label for="input-item" class="block">Task Item</label>
-    <div class="search-container flex">
+    <div class="flex">
       <input id="input-item" class="form__input form__input-task" placeholder="Type in a new item"><button id="add-task-icon" class="form__task-icon">+</button>
     </div>
     <button id="btn-make-task" type="submit" class="form__input form__input-create">Make Task List</button>
@@ -40,7 +40,7 @@
   <template>
     <article class="card card__task-container">
       <section class="card__task-top">
-        <h3 class="card-title" contenteditable="true">Task Title</h3>
+        <h3 class="card-title">Task Title</h3>
       </section>
       <div class="card__task-list">
         <label class="task-checkbox">
